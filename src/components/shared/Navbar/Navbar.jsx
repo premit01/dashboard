@@ -1,6 +1,6 @@
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
-
+import logo from '../../../assets/images/Logo/infotecsourz.logo.png'
 
 const Navbar = () => {
     const { user } = useAuth()
@@ -10,7 +10,9 @@ const Navbar = () => {
             <div className="flex justify-between">
                 <div>
                     <Link to='/'>
-                        <span className="font-semibold text-2xl text-orange-500">PremIt</span>
+                        <span >
+                            <img className="w-28" src={logo} alt="" />
+                        </span>
                     </Link>
                 </div>
                 <div>

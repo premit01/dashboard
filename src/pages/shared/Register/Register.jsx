@@ -9,21 +9,30 @@ import SocialLogin from "../../../components/SocialLogin/SocialLogin";
 const Register = () => {
     const [countries, setCountries] = useState([])
     const [termCheck, setTermCheck] = useState(false)
-    const [myCountry, setMyCountry] = useState('')
+    const { register,
+        handleSubmit,
+        formState: { errors } }
+        = useForm();
 
-    const { register, handleSubmit, formState: { errors } } = useForm();
-    const { registerWithEmailAndPassword, logOut } = useAuth()
+    const { registerWithEmailAndPassword, logOut, profileUpdate } = useAuth()
     const navigate = useNavigate()
+    const [error, setError] = useState("")
 
     const onSubmit = data => {
+        const fullName = data?.first_name + " " + data?.last_name
+
         registerWithEmailAndPassword(data?.email, data?.password)
             .then(result => {
-                console.log('registration result', result)
-                logOut()
-                    .then(() => {
-                        navigate('/login')
+                // update profile 
+                profileUpdate(fullName)
+                    .then(result => {
+                        navigate('/dashboard')
+
                     })
+                    .catch(err => setError(err?.code))
+
             })
+            .catch(err => setError(err?.code))
     };
 
 
@@ -38,7 +47,7 @@ const Register = () => {
 
 
     return (
-        <div className="md:w-3/4 mx-auto border rounded p-10 my-10">
+        <div className="md:w-1/2 mx-auto border rounded p-10 my-10">
             <h2 className="text-center text-capitalize text-3xl  mb-10">Sign Up Please</h2>
 
             <SocialLogin />

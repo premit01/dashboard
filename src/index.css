@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.dashboard_link_active {
+    @apply bg-slate-200 flex items-center gap-3 py-1.5  px-3 
+}
+.dashboard_link_default {
+    @apply hover:bg-slate-200 flex items-center gap-3 py-1.5 px-3  
+}

@@ -7,6 +7,10 @@ import About from "../pages/main/About/About";
 import AddProduct from "../pages/dashboard/AddProduct/AddProduct";
 import Login from "../pages/shared/Login/Login";
 import Register from "../pages/shared/Register/Register";
+import NewOrder from "../pages/dashboard/NewOrder/NewOrder";
+import PrivetRoute from "./PrivetRoute";
+import Specifications from "../pages/dashboard/specifications/Specifications";
+
 
 const router = createBrowserRouter([
     {
@@ -33,7 +37,7 @@ const router = createBrowserRouter([
     },
     {
         path: "/dashboard",
-        element: <Dashboard />,
+        element: <PrivetRoute><Dashboard /></PrivetRoute>,
         children: [
             {
                 path: '/dashboard',
@@ -42,7 +46,16 @@ const router = createBrowserRouter([
             {
                 path: 'add_product',
                 element: <AddProduct />
-            }
+            },
+            {
+                path: 'new_order',
+                element: <NewOrder />
+            },
+            {
+                path: "specifications",
+                element: <Specifications />
+            },
+
         ]
     }
 ])
