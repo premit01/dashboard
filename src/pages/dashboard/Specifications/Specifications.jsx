@@ -7,15 +7,23 @@ import cat from '../../../assets/images/photo/cat.png'
 
 
 import { useState } from "react";
+import CroppingAndAlignment from '../../../components/dashboard/CroppingAndAlignment/CroppingAndAlignment';
 
 const Specifications = () => {
+    // formats 
     const [jpeg, setJpeg] = useState(false)
     const [tiff, setTiff] = useState(false)
     const [png, setPng] = useState(false)
     const [psd, setPsd] = useState(false)
 
+    // cropping and alignment 
+    const [isTrim, setTrim] = useState(false)
+
+
     const [background, setBackground] = useState("")
     const [selectedBackground, setSelectedBackground] = useState("#000")
+
+
 
 
     const backgroundOptions = [
@@ -113,6 +121,9 @@ const Specifications = () => {
 
                     </div>
 
+
+                    {/* cropping and alignment  */}
+                    <CroppingAndAlignment isTrim={isTrim} setTrim={setTrim} />
 
 
 
