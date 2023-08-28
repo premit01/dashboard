@@ -1,10 +1,4 @@
 import cat from '../../../assets/images/photo/cat.png'
-// import { MdRadioButtonUnchecked, MdOutlineRadioButtonChecked } from "react-icons/md";
-
-
-
-
-
 
 import { useState } from "react";
 import CroppingAndAlignment from '../../../components/dashboard/CroppingAndAlignment/CroppingAndAlignment';
@@ -18,18 +12,22 @@ const Specifications = () => {
         psd: ""
     })
 
-    console.log(selectedFormate)
+    const [selectedBackground, setSelectedBackground] = useState({
+        isOpenCustomOption: false,
+        selectedBackgroundColor: ''
+    })
+
+
     // cropping and alignment 
     const [isTrim, setTrim] = useState(false)
 
 
     const [background, setBackground] = useState("")
-    const [selectedBackground, setSelectedBackground] = useState("#000")
+    // const [selectedBackground, setSelectedBackground] = useState("")
 
 
 
     // format options 
-
     const formatOptions = [
         { id: 1, value: 'jpeg' },
         { id: 2, value: 'tiff' },
@@ -39,32 +37,44 @@ const Specifications = () => {
     ]
 
     // background options 
-
     const backgroundOptions = [
-        { id: "back1", value: 'white' },
-        { id: "back2", value: 'transparent' },
-        { id: "back3", value: 'keep original background' },
-        { id: "back4", value: 'custom color' },
+        { id: "back1", title: 'white', value: 'white' },
+        { id: "back2", title: 'transparent', value: 'transparent' },
+        { id: "back3", title: 'keep original background', value: '' },
+
     ]
 
+    // handle change format 
+    const handleFormatChange = (e) => {
+        const checkedFormat = e.target.value
+        setSelectedFormate((selectedFormate) => ({ ...selectedFormate, [checkedFormat]: selectedFormate[checkedFormat] === checkedFormat ? '' : checkedFormat }))
 
+    }
+
+
+    // handle background color 
     const handleBackgroundColor = (event) => {
-        event.preventDefault()
-        const colorValue = event.target.value;
-        console.log('color', colorValue)
-        setSelectedBackground(colorValue);
+
+        const color = event.target.value;
+        console.log('color', color)
+        // hide custom option 
+        setSelectedBackground((selectedBackground) => ({ ...selectedBackground, isOpenCustomOption: color.startsWith('#') || false }))
+        // apply new background 
+        setSelectedBackground((selectedBackground) => ({ ...selectedBackground, selectedBackgroundColor: color }))
+        console.log('selectedBackground', selectedBackground?.selectedBackgroundColor)
     };
 
-
-    const handleFormatChange = (e) => {
-        const eventFormat = e.target.value
-        console.log('get format', typeof (eventFormat))
-
-        setSelectedFormate((selectedFormate) => ({ ...selectedFormate, [eventFormat]: selectedFormate[eventFormat] === eventFormat ? '' : eventFormat }))
-
+    const handleOptionOpen = (option) => {
+        setSelectedBackground((selectedBackground) => ({ ...selectedBackground, isOpenCustomOption: option }))
+        console.log('isOpen', selectedBackground?.isOpenCustomOption)
 
 
     }
+
+
+
+
+
 
     return (
         <div>
@@ -78,8 +88,9 @@ const Specifications = () => {
                         <input type="text" placeholder="Type here" className="input input-bordered border-2 focus:border-gray-400 focus:outline-0  w-full " />
                     </div>
 
-                    {/* file format  */}
 
+
+                    {/* file format  */}
                     <div className="shadow-lg border bg-white rounded-lg border-slate-500 my-10 p-5">
                         <p className="text-sm text-slate-500 text-capitalize mb-3">File formate</p>
 
@@ -108,18 +119,43 @@ const Specifications = () => {
                     <div className="shadow-lg border bg-white rounded-lg border-slate-500 my-10 p-5">
                         <p className="text-sm text-slate-500 text-capitalize mb-3">Background</p>
 
-
                         {
-                            backgroundOptions.map(back => <div
-                                key={back.id}
-                                className="form-control  dropdown">
-                                <label className="cursor-pointer label justify-start ">
-                                    <input onChange={() => setBackground(back.value)} type="checkbox" checked={background === back.value} className="checkbox checkbox-warning mr-5" />
-                                    <span className=" uppercase">{back.value}</span>
+                            backgroundOptions.map(({ id, title, value }) => <div
+                                key={id}
+                                className='mb-5 '
+                            >
+                                <label className='flex items-center' htmlFor="">
+                                    <input
+                                        onChange={handleBackgroundColor}
+                                        checked={selectedBackground?.selectedBackgroundColor === value}
+                                        value={value}
+                                        type="radio"
+                                        className='accent-primary w-5 h-5 mr-5  bg-red-200'
+
+                                    />
+                                    <span className='uppercase'>{title}</span>
                                 </label>
-                            </div>)
+                            </div>
+                            )
+
                         }
-                        <div className={`${background !== 'custom color' ? 'hidden' : ''} p-2  duration-500 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52`}>
+
+                        {/* custom radio  */}
+                        <div className='mb-5 '>
+                            <label className='flex items-center' htmlFor="">
+                                <input
+                                    onChange={() => handleOptionOpen(!selectedBackground?.isOpenCustomOption)}
+                                    checked={selectedBackground?.isOpenCustomOption}
+                                    // value={!setSelectedBackground?.selectedBackgroundColor}
+                                    type="radio"
+                                    className='accent-primary w-5 h-5 mr-5  bg-red-200'
+
+                                />
+                                <span className='uppercase'>Custom Background</span>
+                            </label>
+                        </div>
+
+                        <div className={`${!selectedBackground?.isOpenCustomOption ? 'hidden' : ''} p-2  duration-500 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52`}>
 
                             <div className='border w-full p-2'>
                                 <input onChange={handleBackgroundColor} type="color" className='w-full' />
@@ -141,14 +177,9 @@ const Specifications = () => {
                 {/* preview ************************ image ************************************* */}
                 <div >
                     <div
-                        // style={background === 'custom color' && { backgroundColor: `${selectedBackground}` }}
-                        className={`
-                    ${background === 'white' ? 'bg-white'
-                                : background === 'transparent' ? 'bg-transparent'
-                                    : background === 'keep original background' ? 'bg-none' :
-                                        background === 'custom color' ? `bg-[${selectedBackground}]`
-                                            : ''
-                            } border   max-h-[500px] border-slate-300`}>
+                        className={` border   max-h-[500px] border-slate-300`}
+                        style={{ backgroundColor: selectedBackground?.selectedBackgroundColor }}
+                    >
                         <img src={cat} alt="" />
                     </div>
                 </div>
