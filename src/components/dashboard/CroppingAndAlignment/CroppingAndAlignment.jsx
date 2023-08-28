@@ -8,6 +8,7 @@ const CroppingAndAlignment = ({ cropAlignment, setCropAlignment }) => {
     const handleOpenRatioOption = (isOpen) => {
         console.log('isOpen')
         setCropAlignment((cropAlignment) => ({ ...cropAlignment, isOpenRatio: isOpen }))
+        setCropAlignment((cropAlignment) => ({ ...cropAlignment, isExactOpen: false }))
 
     }
 
@@ -26,7 +27,19 @@ const CroppingAndAlignment = ({ cropAlignment, setCropAlignment }) => {
     }
 
     const handleExactOption = (option) => {
+        setCropAlignment((cropAlignment) => ({ ...cropAlignment, isExactOpen: option }))
+        setCropAlignment((cropAlignment) => ({ ...cropAlignment, isOpenRatio: false }))
+    }
 
+    const handleExactHeight = e => {
+        const height = e.target.value;
+        setCropAlignment((cropAlignment) => ({ ...cropAlignment, exactHeight: height }))
+        console.log(cropAlignment?.exactHeight)
+    }
+    const handleExactWidth = e => {
+        const width = e.target.value;
+        setCropAlignment((cropAlignment) => ({ ...cropAlignment, exactWidth: width }))
+        console.log(cropAlignment?.exactWidth)
     }
 
 
@@ -159,60 +172,64 @@ const CroppingAndAlignment = ({ cropAlignment, setCropAlignment }) => {
                     </label>
 
 
-                    {/* input */}
+                    {/* exacts */}
 
-                    <div className='grid grid-cols-2 gap-3 mb-5'>
+                    <div className={`${!cropAlignment?.isExactOpen ? 'hidden' : ''}`}>
+                        <div className='grid grid-cols-2 gap-3 mb-5'>
 
-                        <div className="relative ">
-                            <label htmlFor="UserEmail" className="ml-2 text-xs">
-                                Height
-                            </label>
-                            <input
-                                type="email"
-                                id="UserEmail"
-                                className="w-full rounded-md py-2 px-3 border-[#ddd] border outline-0 pe-10 shadow-sm sm:text-sm"
-                            />
-                            <span className="pointer-events-none absolute inset-y-0 end-0 grid w-10 place-content-center text-gray-500 mt-3">
-                                px
-                            </span>
+                            <div className="relative ">
+                                <label htmlFor="UserEmail" className="ml-2 text-xs">
+                                    Height
+                                </label>
+                                <input
+                                    onChange={handleExactHeight}
+                                    type="email"
+                                    id="UserEmail"
+                                    className="w-full rounded-md py-2 px-3 border-[#ddd] border outline-0 pe-10 shadow-sm sm:text-sm"
+                                />
+                                <span className="pointer-events-none absolute inset-y-0 end-0 grid w-10 place-content-center text-gray-500 mt-3">
+                                    px
+                                </span>
+                            </div>
+
+
+
+                            <div className="relative ">
+                                <label htmlFor="UserEmail" className="ml-2 text-xs">
+                                    Width
+                                </label>
+                                <input
+                                    onChange={handleExactWidth}
+                                    type="email"
+                                    id="UserEmail"
+                                    className="w-full rounded-md py-2 px-3 border-[#ddd] border outline-0 pe-10 shadow-sm sm:text-sm"
+                                />
+                                <span className="pointer-events-none absolute inset-y-0 end-0 grid w-10 place-content-center text-gray-500 mt-3">
+                                    px
+                                </span>
+                            </div>
                         </div>
 
 
+                        {/* virtical alignment  */}
 
-                        <div className="relative ">
-                            <label htmlFor="UserEmail" className="ml-2 text-xs">
-                                Width
-                            </label>
-                            <input
-                                type="email"
-                                id="UserEmail"
-                                className="w-full rounded-md py-2 px-3 border-[#ddd] border outline-0 pe-10 shadow-sm sm:text-sm"
-                            />
-                            <span className="pointer-events-none absolute inset-y-0 end-0 grid w-10 place-content-center text-gray-500 mt-3">
-                                px
-                            </span>
+                        <div>
+                            <select
+                                id="hs-hidden-select"
+                                className="py-2 px-4 w-full  block   rounded-md text-sm   "
+                                onChange={handleVerticalAlignment}
+
+                                style={{ border: '1px solid #ddd', outline: 'none' }}
+                            >
+
+                                {
+                                    positionOptions.map(position => <option value={position?.value} key={position.id}>
+                                        {position.value}
+                                    </option>)
+                                }
+
+                            </select>
                         </div>
-                    </div>
-
-
-                    {/* virtical alignment  */}
-
-                    <div>
-                        <select
-                            id="hs-hidden-select"
-                            className="py-2 px-4 w-full  block   rounded-md text-sm   "
-                            onChange={handleVerticalAlignment}
-
-                            style={{ border: '1px solid #ddd', outline: 'none' }}
-                        >
-
-                            {
-                                positionOptions.map(position => <option value={position?.value} key={position.id}>
-                                    {position.value}
-                                </option>)
-                            }
-
-                        </select>
                     </div>
 
                 </div>

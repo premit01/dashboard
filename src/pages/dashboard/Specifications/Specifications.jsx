@@ -24,8 +24,8 @@ const Specifications = () => {
         aspectRatio: '',
         ratioAlignment: '',
         isOpenExact: false,
-        exactHeight: 0,
-        exactWidth: 0,
+        exactHeight: '',
+        exactWidth: '',
         exactAlignment: '',
         isOpenMargin: false,
         topMargin: 0,
@@ -200,6 +200,10 @@ const Specifications = () => {
                         <img src={cat} alt="" className='h-[300px] max-w-full  border-black' style={
                             {
                                 aspectRatio: cropAlignment?.aspectRatio,
+                                minHeight: '200px',
+                                minWidth: '200px',
+                                height: cropAlignment?.exactHeight + "px",
+                                width: cropAlignment?.exactWidth + "px"
 
                             }
                         } />
