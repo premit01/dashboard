@@ -11,19 +11,29 @@ const Specifications = () => {
         png: "",
         psd: ""
     })
-
+    // background change state 
     const [selectedBackground, setSelectedBackground] = useState({
         isOpenCustomOption: false,
         selectedBackgroundColor: ''
     })
 
-
-    // cropping and alignment 
-    const [isTrim, setTrim] = useState(false)
-
-
-    const [background, setBackground] = useState("")
-    // const [selectedBackground, setSelectedBackground] = useState("")
+    // cropping and alignment state
+    const [cropAlignment, setCropAlignment] = useState({
+        isOpenTrim: false,
+        isOpenRatio: false,
+        aspectRatio: '',
+        ratioAlignment: '',
+        isOpenExact: false,
+        exactHeight: 0,
+        exactWidth: 0,
+        exactAlignment: '',
+        isOpenMargin: false,
+        topMargin: 0,
+        bottomMargin: 0,
+        leftMargin: 0,
+        rightMargin: 0,
+        isRotateUpright: false
+    })
 
 
 
@@ -168,7 +178,7 @@ const Specifications = () => {
 
 
                     {/* cropping and alignment  */}
-                    <CroppingAndAlignment isTrim={isTrim} setTrim={setTrim} />
+                    <CroppingAndAlignment cropAlignment={cropAlignment} setCropAlignment={setCropAlignment} />
 
 
 
@@ -177,10 +187,22 @@ const Specifications = () => {
                 {/* preview ************************ image ************************************* */}
                 <div >
                     <div
-                        className={` border   max-h-[500px] border-slate-300`}
-                        style={{ backgroundColor: selectedBackground?.selectedBackgroundColor }}
+                        className={` border fixed  h-[500px] w-full border-slate-300`}
+                        style={
+                            {
+
+                                backgroundColor: selectedBackground?.selectedBackgroundColor,
+                                verticalAlign: cropAlignment?.ratioAlignment,
+
+                            }
+                        }
                     >
-                        <img src={cat} alt="" />
+                        <img src={cat} alt="" className='h-[300px] max-w-full  border-black' style={
+                            {
+                                aspectRatio: cropAlignment?.aspectRatio,
+
+                            }
+                        } />
                     </div>
                 </div>
             </div>

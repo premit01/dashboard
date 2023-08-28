@@ -1,0 +1,10 @@
+#height-input {
+    position: relative;
+}
+
+#height-input::before {
+    content: "Read this -";
+    background-color: yellow;
+    color: red;
+    font-weight: bold;
+}
