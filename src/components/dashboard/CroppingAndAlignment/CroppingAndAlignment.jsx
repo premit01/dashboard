@@ -38,8 +38,9 @@ const CroppingAndAlignment = ({ isTrim = true, setTrim }) => {
                         <select
                             id="hs-hidden-select"
                             className="py-3 px-4 w-full  block mb-3 rounded-md text-sm focus:border-blue-500 focus:ring-blue-500  "
+                            defaultValue='Select Ration'
                         >
-                            <option className="w-full" selected="">Select Ration</option>
+                            <option className="w-full" >Select Ration</option>
                             {
                                 aspectOptions.map(op => <option key={op.id}>
                                     {op.value} &#40; {op.size} &#41;
@@ -53,8 +54,9 @@ const CroppingAndAlignment = ({ isTrim = true, setTrim }) => {
                         <select
                             id="hs-hidden-select"
                             className="py-3 px-4 w-full  block   rounded-md text-sm focus:border-blue-500 focus:ring-blue-500  "
+                            defaultValue='Vertical Alignment'
                         >
-                            <option className="w-full" selected="">Vertical Alignment</option>
+                            <option className="w-full" >Vertical Alignment</option>
                             {
                                 positionOptions.map(position => <option key={position.id}>
                                     {position.value}

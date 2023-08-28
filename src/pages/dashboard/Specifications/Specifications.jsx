@@ -10,12 +10,15 @@ import { useState } from "react";
 import CroppingAndAlignment from '../../../components/dashboard/CroppingAndAlignment/CroppingAndAlignment';
 
 const Specifications = () => {
-    // formats 
-    const [jpeg, setJpeg] = useState(false)
-    const [tiff, setTiff] = useState(false)
-    const [png, setPng] = useState(false)
-    const [psd, setPsd] = useState(false)
 
+    const [selectedFormate, setSelectedFormate] = useState({
+        jpeg: "",
+        tiff: "",
+        png: "",
+        psd: ""
+    })
+
+    console.log(selectedFormate)
     // cropping and alignment 
     const [isTrim, setTrim] = useState(false)
 
@@ -25,6 +28,17 @@ const Specifications = () => {
 
 
 
+    // format options 
+
+    const formatOptions = [
+        { id: 1, value: 'jpeg' },
+        { id: 2, value: 'tiff' },
+        { id: 3, value: 'png' },
+        { id: 4, value: 'psd' },
+
+    ]
+
+    // background options 
 
     const backgroundOptions = [
         { id: "back1", value: 'white' },
@@ -41,6 +55,16 @@ const Specifications = () => {
         setSelectedBackground(colorValue);
     };
 
+
+    const handleFormatChange = (e) => {
+        const eventFormat = e.target.value
+        console.log('get format', typeof (eventFormat))
+
+        setSelectedFormate((selectedFormate) => ({ ...selectedFormate, [eventFormat]: selectedFormate[eventFormat] === eventFormat ? '' : eventFormat }))
+
+
+
+    }
 
     return (
         <div>
@@ -59,39 +83,24 @@ const Specifications = () => {
                     <div className="shadow-lg border bg-white rounded-lg border-slate-500 my-10 p-5">
                         <p className="text-sm text-slate-500 text-capitalize mb-3">File formate</p>
 
-                        {/* jpeg */}
-                        <div className="form-control mb-4">
-                            <label className="cursor-pointer label justify-start ">
-                                <input onChange={() => setJpeg(!jpeg)} type="checkbox" checked={jpeg} className="checkbox checkbox-warning mr-5 " />
-                                <span className=" uppercase">Jpeg</span>
-                            </label>
-                        </div>
+                        {
+                            formatOptions.map(op => <div
+                                key={op?.id}
+                                className='mb-5 '
+                            >
+                                <label className='flex items-center' htmlFor="">
+                                    <input
+                                        onChange={handleFormatChange}
+                                        checked={selectedFormate[op.value]}
+                                        value={op.value}
+                                        type="radio"
+                                        className='accent-primary w-5 h-5 mr-5  bg-red-200'
 
-
-                        {/* tiff */}
-                        <div className="form-control mb-4">
-                            <label className="cursor-pointer label justify-start ">
-                                <input onChange={() => setTiff(!tiff)} type="checkbox" checked={tiff} className="checkbox checkbox-warning mr-5" />
-                                <span className=" uppercase">tiff</span>
-                            </label>
-                        </div>
-
-                        {/* png */}
-                        <div className="form-control mb-4">
-                            <label className="cursor-pointer label justify-start ">
-                                <input onChange={() => setPng(!png)} type="checkbox" checked={png} className="checkbox checkbox-warning mr-5" />
-                                <span className=" uppercase">png</span>
-                            </label>
-                        </div>
-
-                        {/* psd */}
-                        <div className="form-control mb-4">
-                            <label className="cursor-pointer label justify-start ">
-                                <input onChange={() => setPsd(!psd)} type="checkbox" checked={psd} className="checkbox checkbox-warning mr-5" />
-                                <span className=" uppercase">psd</span>
-                            </label>
-                        </div>
-
+                                    />
+                                    <span className='uppercase'>{op.value}</span>
+                                </label>
+                            </div>)
+                        }
 
                     </div>
 
