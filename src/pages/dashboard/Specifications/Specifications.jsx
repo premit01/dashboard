@@ -2,6 +2,7 @@ import cat from '../../../assets/images/photo/cat.png'
 
 import { useState } from "react";
 import CroppingAndAlignment from '../../../components/dashboard/CroppingAndAlignment/CroppingAndAlignment';
+import FileSettings from '../../../components/dashboard/FileSettings/FileSettings';
 
 const Specifications = () => {
 
@@ -21,20 +22,27 @@ const Specifications = () => {
     const [cropAlignment, setCropAlignment] = useState({
         isOpenTrim: false,
         isOpenRatio: false,
+        isOpenExact: false,
+        isOpenMargin: false,
+        isRotateUpright: false,
+        isOriginalMargin: true,
+        isRotate: false,
         aspectRatio: '',
         ratioAlignment: '',
-        isOpenExact: false,
         exactHeight: '',
         exactWidth: '',
         exactAlignment: '',
-        isOpenMargin: false,
-        topMargin: 0,
-        bottomMargin: 0,
-        leftMargin: 0,
-        rightMargin: 0,
-        isRotateUpright: false
+        topMargin: '',
+        bottomMargin: '',
+        leftMargin: '',
+        rightMargin: '',
+        fileSettings: {
+            isValid: false
+        }
+
     })
 
+    console.log('all property', cropAlignment)
 
 
     // format options 
@@ -178,8 +186,16 @@ const Specifications = () => {
 
 
                     {/* cropping and alignment  */}
-                    <CroppingAndAlignment cropAlignment={cropAlignment} setCropAlignment={setCropAlignment} />
+                    <CroppingAndAlignment
+                        cropAlignment={cropAlignment}
+                        setCropAlignment={setCropAlignment}
+                    />
 
+                    {/* file settings  */}
+                    <FileSettings
+                        cropAlignment={cropAlignment}
+                        setCropAlignment={setCropAlignment}
+                    />
 
 
                 </div>
@@ -203,8 +219,12 @@ const Specifications = () => {
                                 minHeight: '200px',
                                 minWidth: '200px',
                                 height: cropAlignment?.exactHeight + "px",
-                                width: cropAlignment?.exactWidth + "px"
-
+                                width: cropAlignment?.exactWidth + "px",
+                                marginTop: cropAlignment?.topMargin ? cropAlignment?.topMargin + 'px' : '',
+                                marginBottom: cropAlignment?.bottomMargin ? cropAlignment?.bottomMargin + 'px' : '',
+                                marginLeft: cropAlignment?.leftMargin ? cropAlignment?.leftMargin + 'px' : '',
+                                marginRight: cropAlignment?.rightMargin ? cropAlignment?.rightMargin + 'px' : '',
+                                transform: `rotate(${cropAlignment?.isRotate ? '180deg' : '0'})`
                             }
                         } />
                     </div>

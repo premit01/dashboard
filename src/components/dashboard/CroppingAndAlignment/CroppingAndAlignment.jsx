@@ -1,61 +1,115 @@
+import Margin from '../../../pages/dashboard/Margin/Margin';
+import AspectRatio from '../AspectRatio/AspectRatio';
+import Exact from '../Exact/Exact';
 import './CroppingAndAlignment.css'
 
 
 const CroppingAndAlignment = ({ cropAlignment, setCropAlignment }) => {
 
 
+    // state property chang handler 
 
-    const handleOpenRatioOption = (isOpen) => {
-        console.log('isOpen')
-        setCropAlignment((cropAlignment) => ({ ...cropAlignment, isOpenRatio: isOpen }))
-        setCropAlignment((cropAlignment) => ({ ...cropAlignment, isExactOpen: false }))
+    const handlePropertyChange = (property, value) => {
+        setCropAlignment((cropAlignment) => ({ ...cropAlignment, [property]: value }))
+    }
 
+
+    const handleOpenRatio = (isOpen) => {
+        handlePropertyChange('isOpenRatio', isOpen)
+        handlePropertyChange('isOpenExact', false)
+        handlePropertyChange('isOriginalMargin', false)
+
+        handlePropertyChange('exactHeight', '')
+        handlePropertyChange('exactWidth', '')
+        handlePropertyChange('exactAlignment', '')
+        // console.log(cropAlignment)
+
+    }
+
+    const handleOpenExact = (isOpen) => {
+        handlePropertyChange('isOpenExact', isOpen)
+        handlePropertyChange('isOpenRatio', false)
+        handlePropertyChange('isOriginalMargin', false)
+
+        handlePropertyChange('aspectRatio', '')
+        handlePropertyChange('ratioAlignment', '')
+        // console.log('handleExact', cropAlignment)
+    }
+
+    const handleOriginalMargin = (isOpen) => {
+        handlePropertyChange('isOriginalMargin', isOpen)
+        handlePropertyChange('isOpenRatio', false)
+        handlePropertyChange('isOpenExact', false)
+
+        handlePropertyChange('aspectRatio', '')
+        handlePropertyChange('ratioAlignment', '')
+
+        handlePropertyChange('exactHeight', '')
+        handlePropertyChange('exactWidth', '')
+        handlePropertyChange('exactAlignment', '')
+        console.log('original margin', cropAlignment)
+    }
+
+    // handle open margin 
+
+    const handleOpenMargin = (isOpen) => {
+        handlePropertyChange('isOpenMargin', isOpen)
+    }
+
+    // handle Rotate 
+    const handleRotate = (isRotate) => {
+        handlePropertyChange('isRotate', isRotate)
     }
 
 
     const handleAspectRatio = e => {
         const ratio = e.target.value;
-        console.log('ratioStae', cropAlignment?.aspectRatio)
-        setCropAlignment((cropAlignment) => ({ ...cropAlignment, aspectRatio: ratio }))
+        handlePropertyChange("aspectRatio", ratio)
 
     }
 
     const handleVerticalAlignment = e => {
         const alignment = e.target.value;
-        setCropAlignment((cropAlignment) => ({ ...cropAlignment, ratioAlignment: alignment }))
-        console.log(cropAlignment?.ratioAlignment)
-    }
+        handlePropertyChange("ratioAlignment", alignment)
 
-    const handleExactOption = (option) => {
-        setCropAlignment((cropAlignment) => ({ ...cropAlignment, isExactOpen: option }))
-        setCropAlignment((cropAlignment) => ({ ...cropAlignment, isOpenRatio: false }))
     }
 
     const handleExactHeight = e => {
         const height = e.target.value;
-        setCropAlignment((cropAlignment) => ({ ...cropAlignment, exactHeight: height }))
-        console.log(cropAlignment?.exactHeight)
+        handlePropertyChange("exactHeight", height)
     }
+
     const handleExactWidth = e => {
         const width = e.target.value;
-        setCropAlignment((cropAlignment) => ({ ...cropAlignment, exactWidth: width }))
-        console.log(cropAlignment?.exactWidth)
+        handlePropertyChange('exactWidth', width)
     }
 
 
 
+    // top margin 
+    const handleTopMargin = e => {
+        const topMargin = e.target.value;
+        handlePropertyChange('topMargin', topMargin)
+    }
 
-    const aspectOptions = [
-        { id: 1, value: '1/1', title: '1:1 (square)' },
-        { id: 2, value: '2/3', title: '2:2 (portrait)' },
-        { id: 3, value: '3/2', title: '3:2 (landscape)' },
-        { id: 4, value: '16/9', title: '16:9 (widescreen)' },
-    ]
-    const positionOptions = [
-        { id: 1, value: 'top', },
-        { id: 2, value: 'center', },
-        { id: 3, value: 'bottom', },
-    ]
+    // bottom margin 
+    const handleBottomMargin = e => {
+        const bottomMargin = e.target.value;
+        handlePropertyChange('bottomMargin', bottomMargin)
+    }
+    // left margin 
+    const handleLeftMargin = e => {
+        const leftMargin = e.target.value;
+        handlePropertyChange('leftMargin', leftMargin)
+    }
+    // left margin 
+    const handleRightMargin = e => {
+        const rightMargin = e.target.value;
+        handlePropertyChange('rightMargin', rightMargin)
+    }
+
+
+
 
 
     return (
@@ -64,175 +118,38 @@ const CroppingAndAlignment = ({ cropAlignment, setCropAlignment }) => {
                 <p className="text-sm text-slate-500 text-capitalize mb-3">Cropping and Alignment</p>
 
 
-
-                {/* 
-                <div className='mb-5 '>
-                    <label className='flex items-center' htmlFor="">
-                        <input
-                            onChange={() => handleOpenRatioOption(!cropAlignment?.isOpenRatio)}
-                            checked={selectedBackground?.selectedBackgroundColor === value}
-                            value={value}
-                            type="radio"
-                            className='accent-primary w-5 h-5 mr-5  bg-red-200'
-
-                        />
-                        <span className='uppercase'>{title}</span>
-                    </label>
-                </div> */}
-
-
-
-
-
-
-
-
-
                 {/* aspect ratio  */}
-                <div className='mb-5 '>
-                    <label className='flex items-center' htmlFor="">
-                        <input
-                            onChange={() => handleOpenRatioOption(cropAlignment?.isOpenRatio === true ? false : true)}
-                            checked={cropAlignment?.isOpenRatio}
-                            type="radio"
-                            className='accent-primary w-5 h-5 mr-5  bg-red-200'
-
-                        />
-                        <span className='uppercase'>Ratio</span>
-                    </label>
-                </div>
-
-                <div className={`${!cropAlignment?.isOpenRatio && 'hidden'} p-2 duration-500 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-full`}>
-
-                    <div className="w-full  ">
-                        <label htmlFor="hs-hidden-select" className=" border w-full">
-
-                        </label>
-
-
-                        {/* ratio  */}
-                        <select
-                            onChange={handleAspectRatio}
-                            id="hs-hidden-select"
-                            className="py-3 px-4 w-full  block mb-3 rounded-md text-sm "
-                            defaultValue={aspectOptions[0].value}
-                            style={{ border: '1px solid #ddd', outline: 'none' }}
-                        >
-
-                            {
-                                aspectOptions.map(op => <option
-                                    key={op.id}
-                                    value={op.value}
-
-                                >
-                                    {op?.title};
-                                </option>)
-                            }
-
-                        </select>
-
-
-                        {/* position ******************************* */}
-
-                        <select
-                            id="hs-hidden-select"
-                            className="py-3 px-4 w-full  block   rounded-md text-sm   "
-                            onChange={handleVerticalAlignment}
-
-                            style={{ border: '1px solid #ddd', outline: 'none' }}
-                        >
-
-                            {
-                                positionOptions.map(position => <option value={position?.value} key={position.id}>
-                                    {position.value}
-                                </option>)
-                            }
-
-                        </select>
-
-
-                    </div>
-
-
-                </div>
+                <AspectRatio
+                    handleAspectRatio={handleAspectRatio}
+                    handleOpenRatio={handleOpenRatio}
+                    handleVerticalAlignment={handleVerticalAlignment}
+                    cropAlignment={cropAlignment}
+                />
 
 
                 {/* ********************exact %%%%%%%%%%%%%%%%%%%% */}
 
-                <div>
-                    <label className='flex items-center mb-5' htmlFor="">
-                        <input
-                            onChange={() => handleExactOption(!cropAlignment?.isExactOpen)}
-                            checked={cropAlignment?.isExactOpen}
-                            type="radio"
-                            className='accent-primary w-5 h-5 mr-5  '
+                <Exact
+                    handleOpenExact={handleOpenExact}
+                    handleExactHeight={handleExactHeight}
+                    handleExactWidth={handleExactWidth}
+                    handleVerticalAlignment={handleVerticalAlignment}
+                    cropAlignment={cropAlignment}
 
-                        />
-                        <span className='uppercase'>Exact</span>
-                    </label>
+                />
 
-
-                    {/* exacts */}
-
-                    <div className={`${!cropAlignment?.isExactOpen ? 'hidden' : ''}`}>
-                        <div className='grid grid-cols-2 gap-3 mb-5'>
-
-                            <div className="relative ">
-                                <label htmlFor="UserEmail" className="ml-2 text-xs">
-                                    Height
-                                </label>
-                                <input
-                                    onChange={handleExactHeight}
-                                    type="email"
-                                    id="UserEmail"
-                                    className="w-full rounded-md py-2 px-3 border-[#ddd] border outline-0 pe-10 shadow-sm sm:text-sm"
-                                />
-                                <span className="pointer-events-none absolute inset-y-0 end-0 grid w-10 place-content-center text-gray-500 mt-3">
-                                    px
-                                </span>
-                            </div>
-
-
-
-                            <div className="relative ">
-                                <label htmlFor="UserEmail" className="ml-2 text-xs">
-                                    Width
-                                </label>
-                                <input
-                                    onChange={handleExactWidth}
-                                    type="email"
-                                    id="UserEmail"
-                                    className="w-full rounded-md py-2 px-3 border-[#ddd] border outline-0 pe-10 shadow-sm sm:text-sm"
-                                />
-                                <span className="pointer-events-none absolute inset-y-0 end-0 grid w-10 place-content-center text-gray-500 mt-3">
-                                    px
-                                </span>
-                            </div>
-                        </div>
-
-
-                        {/* virtical alignment  */}
-
-                        <div>
-                            <select
-                                id="hs-hidden-select"
-                                className="py-2 px-4 w-full  block   rounded-md text-sm   "
-                                onChange={handleVerticalAlignment}
-
-                                style={{ border: '1px solid #ddd', outline: 'none' }}
-                            >
-
-                                {
-                                    positionOptions.map(position => <option value={position?.value} key={position.id}>
-                                        {position.value}
-                                    </option>)
-                                }
-
-                            </select>
-                        </div>
-                    </div>
-
-                </div>
+                {/* margin  */}
+                <Margin
+                    handleOriginalMargin={handleOriginalMargin}
+                    cropAlignment={cropAlignment}
+                    handleOpenExact={handleOpenExact}
+                    handleTopMargin={handleTopMargin}
+                    handleBottomMargin={handleBottomMargin}
+                    handleLeftMargin={handleLeftMargin}
+                    handleRightMargin={handleRightMargin}
+                    handleOpenMargin={handleOpenMargin}
+                    handleRotate={handleRotate}
+                />
 
 
             </div>
