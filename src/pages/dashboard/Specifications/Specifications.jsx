@@ -36,13 +36,18 @@ const Specifications = () => {
         bottomMargin: '',
         leftMargin: '',
         rightMargin: '',
-        fileSettings: {
-            isValid: false
-        }
 
     })
 
-    console.log('all property', cropAlignment)
+
+    const [fileSettings, setFileSettings] = useState({
+        isDpi: false,
+        isOpenMaxDimension: false,
+        isOpenMaxFile: false,
+    })
+
+    console.log('fileSettings', fileSettings)
+
 
 
     // format options 
@@ -193,8 +198,8 @@ const Specifications = () => {
 
                     {/* file settings  */}
                     <FileSettings
-                        cropAlignment={cropAlignment}
-                        setCropAlignment={setCropAlignment}
+                        fileSettings={fileSettings}
+                        setFileSettings={setFileSettings}
                     />
 
 
