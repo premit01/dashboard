@@ -1,9 +1,10 @@
 
 import shoes from '../../../assets/images/photo/shoes (1).png'
-
 import { useState } from "react";
 import CroppingAndAlignment from '../../../components/dashboard/CroppingAndAlignment/CroppingAndAlignment';
 import FileSettings from '../../../components/dashboard/FileSettings/FileSettings';
+import FileFormat from '../../../components/dashboard/FileFormat/FileFormat';
+import BackgroundOptionSection from '../BackgroundOptionSection/BackgroundOptionSection';
 
 const Specifications = () => {
 
@@ -41,7 +42,7 @@ const Specifications = () => {
     })
 
 
-    const [ratioWidth, ratioHeight,] = cropAlignment?.aspectRatio?.split('/').map(Number)
+    const [ratioWidth, ratioHeight,] = cropAlignment.aspectRatio.split('/').map(Number)
 
     console.log(ratioHeight, ratioWidth)
 
@@ -106,100 +107,35 @@ const Specifications = () => {
 
     }
 
-
-
-
-
-
     return (
         <div>
 
             <div className=" md:grid grid-cols-2 gap-x-5">
-                <div>
+                <div className='order-last'>
                     <div className="form-control w-full ">
                         <label className="label">
                             <span className="label-text">Order Name</span>
                         </label>
                         <input type="text" placeholder="Type here" className="input input-bordered border-2 focus:border-gray-400 focus:outline-0  w-full " />
                     </div>
-
-
-
                     {/* file format  */}
-                    <div className="shadow-lg border bg-white rounded-lg border-slate-500 my-10 p-5">
-                        <p className="text-sm  text-slate-500 text-capitalize mb-3">File formate</p>
+                    <FileFormat
+                        formatOptions={formatOptions}
+                        handleFormatChange={handleFormatChange}
+                        selectedFormate={selectedFormate}
+                    />
 
-                        {
-                            formatOptions.map(op => <div
-                                key={op?.id}
-                                className='mb-5 '
-                            >
-                                <label className='flex items-center' htmlFor="">
-                                    <input
-                                        onChange={handleFormatChange}
-                                        checked={selectedFormate[op.value]}
-                                        value={op.value}
-                                        type="radio"
-                                        className='accent-primary w-5 h-5 mr-5  bg-red-200'
 
-                                    />
-                                    <span className='uppercase'>{op.value}</span>
-                                </label>
-                            </div>)
-                        }
+                    {/* ,,,handleOptionOpen */}
 
-                    </div>
 
                     {/* background ********************************************* */}
-                    <div className="shadow-lg border bg-white rounded-lg border-slate-500 my-10 p-5">
-                        <p className="text-sm text-slate-500 text-capitalize mb-3">Background</p>
-
-                        {
-                            backgroundOptions.map(({ id, title, value }) => <div
-                                key={id}
-                                className='mb-5 '
-                            >
-                                <label className='flex items-center' htmlFor="">
-                                    <input
-                                        onChange={handleBackgroundColor}
-                                        checked={selectedBackground?.selectedBackgroundColor === value}
-                                        value={value}
-                                        type="radio"
-                                        className='accent-primary w-5 h-5 mr-5  bg-red-200'
-
-                                    />
-                                    <span className='uppercase'>{title}</span>
-                                </label>
-                            </div>
-                            )
-
-                        }
-
-                        {/* custom radio  */}
-                        <div className='mb-5 '>
-                            <label className='flex items-center' htmlFor="">
-                                <input
-                                    onChange={() => handleOptionOpen(!selectedBackground?.isOpenCustomOption)}
-                                    checked={selectedBackground?.isOpenCustomOption}
-                                    // value={!setSelectedBackground?.selectedBackgroundColor}
-                                    type="radio"
-                                    className='accent-primary w-5 h-5 mr-5  bg-red-200'
-
-                                />
-                                <span className='uppercase'>Custom Background</span>
-                            </label>
-                        </div>
-
-                        <div className={`${!selectedBackground?.isOpenCustomOption ? 'hidden' : ''} p-2  duration-500 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52`}>
-
-                            <div className='border w-full p-2'>
-                                <input onChange={handleBackgroundColor} type="color" className='w-full' />
-                            </div>
-
-                        </div>
-
-
-                    </div>
+                    <BackgroundOptionSection
+                        backgroundOptions={backgroundOptions}
+                        handleBackgroundColor={handleBackgroundColor}
+                        selectedBackground={selectedBackground}
+                        handleOptionOpen={handleOptionOpen}
+                    />
 
 
                     {/* cropping and alignment  */}
@@ -214,11 +150,11 @@ const Specifications = () => {
                         setFileSettings={setFileSettings}
                     />
 
-
+                    <button className='btn btn-warning py-0 mb-10 rounded-sm btn-block'>Create</button>
                 </div>
 
                 {/* preview ************************ image ************************************* */}
-                <div className=''>
+                <div className='order-first md:order-last'>
                     <div className=' top-16 w-full  bg-green-50 h-full p-0 m-0`'>
                         <div
                             // flex sticky  top-0 items-center justify-center
@@ -229,8 +165,8 @@ const Specifications = () => {
                                     backgroundColor: selectedBackground?.selectedBackgroundColor,
                                     position: 'relative',
                                     width: "100%",
-                                    height: 0,
-                                    paddingBottom: `${(ratioHeight / ratioWidth) * 100}%`
+                                    height: cropAlignment.isOpenRatio ? 0 : 'auto',
+                                    paddingBottom: cropAlignment.isOpenRatio ? `${(ratioHeight / ratioWidth) * 100}%` : ''
 
 
                                 }
@@ -241,25 +177,26 @@ const Specifications = () => {
                             <img src={shoes} alt="" className='' style={
                                 {
                                     position: 'absolute',
-                                    width: '100%',
-                                    height: "auto",
+                                    // width: '100%',
+                                    // height: "auto",
                                     // aspectRatio: cropAlignment?.aspectRatio,
                                     objectFit: 'contain',
                                     [cropAlignment?.ratioAlignment]: 0,
-
-                                    // height: cropAlignment?.exactHeight + "px",
-                                    // width: cropAlignment?.exactWidth + "px",
-                                    // marginTop: cropAlignment?.topMargin ? cropAlignment?.topMargin + 'px' : '',
-                                    // marginBottom: cropAlignment?.bottomMargin ? cropAlignment?.bottomMargin + 'px' : '',
-                                    // marginLeft: cropAlignment?.leftMargin ? cropAlignment?.leftMargin + 'px' : '',
-                                    // marginRight: cropAlignment?.rightMargin ? cropAlignment?.rightMargin + 'px' : '',
-                                    // transform: `rotate(${cropAlignment?.isRotate ? '180deg' : '0'})`
+                                    minHeight: "200px",
+                                    minWidth: "200px",
+                                    height: cropAlignment?.isOpenRatio ? "auto" : cropAlignment?.exactHeight + "px",
+                                    width: cropAlignment?.isOpenRatio ? "100%" : cropAlignment?.exactWidth + "px",
+                                    marginTop: cropAlignment?.topMargin ? cropAlignment?.topMargin + 'px' : '',
+                                    marginBottom: cropAlignment?.bottomMargin ? cropAlignment?.bottomMargin + 'px' : '',
+                                    marginLeft: cropAlignment?.leftMargin ? cropAlignment?.leftMargin + 'px' : '',
+                                    marginRight: cropAlignment?.rightMargin ? cropAlignment?.rightMargin + 'px' : '',
+                                    transform: `rotate(${cropAlignment?.isRotate ? '180deg' : '0'})`
                                 }
                             } />
                         </div>
                     </div>
                 </div>
-                <button className='btn btn-warning py-0 mb-10 rounded-sm'>Create</button>
+
             </div>
         </div>
     );
