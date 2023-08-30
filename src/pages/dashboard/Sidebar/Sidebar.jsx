@@ -9,7 +9,7 @@ const Sidebar = () => {
     const { user } = useAuth()
 
     return (
-        <div className="border-r bg-base-100 h-full">
+        <div className="border-r bg-white h-full">
             <img className='w-36  pl-5 py-5  ' src={logo} alt="" />
             <div className="border-t pt-3 pl-5">
                 <img className="w-16 h-16 rounded-full" src={user?.photoURL || profileImage} alt="" />

@@ -6,7 +6,7 @@ import Sidebar from "../pages/dashboard/Sidebar/Sidebar";
 const Dashboard = () => {
     return (
         <>
-            <div className="max-w-[1920px]">
+            <div className="max-w-[1920px] px-3">
                 {/* <img className='w-24 lg:hidden  ' src={logo} alt="" /> */}
                 <div className="drawer lg:drawer-open">
                     <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
@@ -15,7 +15,7 @@ const Dashboard = () => {
 
                         <Header />
 
-                        <div className="pl-5">
+                        <div className="md:pl-5">
                             <Outlet />
                         </div>
 

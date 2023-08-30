@@ -4,7 +4,7 @@ const AspectRatio = ({ handleAspectRatio, handleOpenRatio, handleVerticalAlignme
 
     const aspectOptions = [
         { id: 1, value: '1/1', title: '1:1 (square)' },
-        { id: 2, value: '2/3', title: '2:2 (portrait)' },
+        { id: 2, value: '2/3', title: '2:3 (portrait)' },
         { id: 3, value: '3/2', title: '3:2 (landscape)' },
         { id: 4, value: '16/9', title: '16:9 (widescreen)' },
     ]

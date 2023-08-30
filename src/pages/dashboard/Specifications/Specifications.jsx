@@ -1,4 +1,5 @@
-import cat from '../../../assets/images/photo/cat.png'
+
+import shoes from '../../../assets/images/photo/shoes (1).png'
 
 import { useState } from "react";
 import CroppingAndAlignment from '../../../components/dashboard/CroppingAndAlignment/CroppingAndAlignment';
@@ -40,10 +41,21 @@ const Specifications = () => {
     })
 
 
+    const [ratioWidth, ratioHeight,] = cropAlignment?.aspectRatio?.split('/').map(Number)
+
+    console.log(ratioHeight, ratioWidth)
+
     const [fileSettings, setFileSettings] = useState({
         isDpi: false,
         isOpenMaxDimension: false,
         isOpenMaxFile: false,
+        isOpenColorProfile: false,
+        isShadow: false,
+        isReflection: false,
+        isClippingPath: false,
+        isMask: false,
+        isRemoveDust: false,
+
     })
 
     console.log('fileSettings', fileSettings)
@@ -102,7 +114,7 @@ const Specifications = () => {
     return (
         <div>
 
-            <div className=" grid grid-cols-2 gap-x-5">
+            <div className=" md:grid grid-cols-2 gap-x-5">
                 <div>
                     <div className="form-control w-full ">
                         <label className="label">
@@ -115,7 +127,7 @@ const Specifications = () => {
 
                     {/* file format  */}
                     <div className="shadow-lg border bg-white rounded-lg border-slate-500 my-10 p-5">
-                        <p className="text-sm text-slate-500 text-capitalize mb-3">File formate</p>
+                        <p className="text-sm  text-slate-500 text-capitalize mb-3">File formate</p>
 
                         {
                             formatOptions.map(op => <div
@@ -206,34 +218,48 @@ const Specifications = () => {
                 </div>
 
                 {/* preview ************************ image ************************************* */}
-                <div >
-                    <div
-                        className={` border fixed  h-[500px] w-full border-slate-300`}
-                        style={
-                            {
+                <div className=''>
+                    <div className=' top-16 w-full  bg-green-50 h-full p-0 m-0`'>
+                        <div
+                            // flex sticky  top-0 items-center justify-center
+                            className='relative w-full h-0 pb-[66%] overflow-hidden'
+                            style={
+                                {
 
-                                backgroundColor: selectedBackground?.selectedBackgroundColor,
-                                verticalAlign: cropAlignment?.ratioAlignment,
+                                    backgroundColor: selectedBackground?.selectedBackgroundColor,
+                                    position: 'relative',
+                                    width: "100%",
+                                    height: 0,
+                                    paddingBottom: `${(ratioHeight / ratioWidth) * 100}%`
 
+
+                                }
                             }
-                        }
-                    >
-                        <img src={cat} alt="" className='h-[300px] max-w-full  border-black' style={
-                            {
-                                aspectRatio: cropAlignment?.aspectRatio,
-                                minHeight: '200px',
-                                minWidth: '200px',
-                                height: cropAlignment?.exactHeight + "px",
-                                width: cropAlignment?.exactWidth + "px",
-                                marginTop: cropAlignment?.topMargin ? cropAlignment?.topMargin + 'px' : '',
-                                marginBottom: cropAlignment?.bottomMargin ? cropAlignment?.bottomMargin + 'px' : '',
-                                marginLeft: cropAlignment?.leftMargin ? cropAlignment?.leftMargin + 'px' : '',
-                                marginRight: cropAlignment?.rightMargin ? cropAlignment?.rightMargin + 'px' : '',
-                                transform: `rotate(${cropAlignment?.isRotate ? '180deg' : '0'})`
-                            }
-                        } />
+                        >
+
+                            {/* h-full p-0 m-0  w-full  border-black */}
+                            <img src={shoes} alt="" className='' style={
+                                {
+                                    position: 'absolute',
+                                    width: '100%',
+                                    height: "auto",
+                                    // aspectRatio: cropAlignment?.aspectRatio,
+                                    objectFit: 'contain',
+                                    [cropAlignment?.ratioAlignment]: 0,
+
+                                    // height: cropAlignment?.exactHeight + "px",
+                                    // width: cropAlignment?.exactWidth + "px",
+                                    // marginTop: cropAlignment?.topMargin ? cropAlignment?.topMargin + 'px' : '',
+                                    // marginBottom: cropAlignment?.bottomMargin ? cropAlignment?.bottomMargin + 'px' : '',
+                                    // marginLeft: cropAlignment?.leftMargin ? cropAlignment?.leftMargin + 'px' : '',
+                                    // marginRight: cropAlignment?.rightMargin ? cropAlignment?.rightMargin + 'px' : '',
+                                    // transform: `rotate(${cropAlignment?.isRotate ? '180deg' : '0'})`
+                                }
+                            } />
+                        </div>
                     </div>
                 </div>
+                <button className='btn btn-warning py-0 mb-10 rounded-sm'>Create</button>
             </div>
         </div>
     );

@@ -18,7 +18,7 @@ const Header = () => {
         <div className="border-b py-1 lg:px-5 px-3">
             <div className='flex justify-between items-center'>
                 <div className='flex items-center relative'>
-                    <p className='bg-primary absolute -top-5 -left-5 text-white py-2 px-5'>Notification</p>
+                    <p className='hidden md:block bg-primary absolute -top-5 -left-5 text-white py-2 px-5'>Notification</p>
 
                 </div>
                 <div>
