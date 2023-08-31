@@ -31,19 +31,19 @@ const Sidebar = () => {
 
                 <li className="mb-3  text-lg  w-full   ">
                     <NavLink
-                        to='/dashboard/specifications'
-                        className={({ isActive }) => isActive ? 'dashboard_link_active' : 'dashboard_link_default'}>
-                        <span><ImImages /></span>
-                        <span>Specifications</span>
-                    </NavLink>
-                </li>
-                <li className="mb-3  text-lg  w-full   ">
-                    <NavLink
                         to='/dashboard/new_order'
                         className={({ isActive }) => isActive ? 'dashboard_link_active' : 'dashboard_link_default'}>
                         <span><ImImages /></span>
                         <span>New Order</span>
                     </NavLink>
+                </li>
+                <li className="mb-3  text-lg  w-full   ">
+                    {/* <NavLink
+                        to='/dashboard/new_order'
+                        className={({ isActive }) => isActive ? 'dashboard_link_active' : 'dashboard_link_default'}>
+                        <span><ImImages /></span>
+                        <span>New Order</span>
+                    </NavLink> */}
                 </li>
 
             </ul>

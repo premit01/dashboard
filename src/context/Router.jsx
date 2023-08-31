@@ -47,12 +47,9 @@ const router = createBrowserRouter([
                 path: 'add_product',
                 element: <AddProduct />
             },
+
             {
-                path: 'new_order',
-                element: <NewOrder />
-            },
-            {
-                path: "specifications",
+                path: "new_order",
                 element: <Specifications />
             },
 

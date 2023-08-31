@@ -41,6 +41,8 @@ const Specifications = () => {
 
     })
 
+    const [progress, setProgress] = useState(50)
+
 
     const [ratioWidth, ratioHeight,] = cropAlignment.aspectRatio.split('/').map(Number)
 
@@ -107,11 +109,18 @@ const Specifications = () => {
 
     }
 
+    const handleProgress = e => {
+        const pro = e.target.value;
+        console.log(pro)
+    }
+
+
+
     return (
         <div>
 
             <div className=" md:grid grid-cols-2 gap-x-5">
-                <div className='order-last'>
+                <div className=''>
                     <div className="form-control w-full ">
                         <label className="label">
                             <span className="label-text">Order Name</span>
@@ -150,15 +159,21 @@ const Specifications = () => {
                         setFileSettings={setFileSettings}
                     />
 
+
+                    {/* progress  */}
+                    <progress className="progress progress-warning w-56" onMouseOver={handleProgress} value={progress} max="100"></progress>
+
+
+
                     <button className='btn btn-warning py-0 mb-10 rounded-sm btn-block'>Create</button>
                 </div>
 
                 {/* preview ************************ image ************************************* */}
-                <div className='order-first md:order-last'>
+                <div className=''>
                     <div className=' top-16 w-full  bg-green-50 h-full p-0 m-0`'>
                         <div
                             // flex sticky  top-0 items-center justify-center
-                            className='relative w-full h-0 pb-[66%] overflow-hidden'
+                            className='border border-slate-300 shadow w-full h-0 pb-[66%] overflow-hidden'
                             style={
                                 {
 
