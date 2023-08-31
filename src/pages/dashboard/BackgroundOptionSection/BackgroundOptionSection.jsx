@@ -1,6 +1,40 @@
 
 
-const BackgroundOptionSection = ({ backgroundOptions, handleBackgroundColor, selectedBackground, handleOptionOpen }) => {
+const BackgroundOptionSection = ({ selectedBackground, setSelectedBackground }) => {
+
+    // background options 
+    const backgroundOptions = [
+        { id: "back1", title: 'white', value: 'white' },
+        { id: "back2", title: 'transparent', value: 'transparent' },
+        { id: "back3", title: 'keep original background', value: '' },
+
+    ]
+
+
+    const handlePropertyChange = (property, value) => {
+        setSelectedBackground((prevState) => ({ ...prevState, [property]: value }))
+    }
+
+    const handleBackgroundColor = (event) => {
+        const color = event.target.value;
+        console.log('color', color)
+        // hide custom option 
+
+        handlePropertyChange('selectedBackgroundColor', color)
+
+        if (!color.startsWith('#')) {
+            handlePropertyChange('isOpenCustomOption', false)
+        }
+
+    };
+
+    const handleOpenCustom = (isOpen) => {
+        handlePropertyChange('isOpenCustomOption', isOpen)
+
+    }
+
+
+
     return (
         <div className="shadow-lg border bg-white rounded-lg border-slate-500 my-10 p-5">
             <p className="text-sm text-slate-500 text-capitalize mb-3">Background</p>
@@ -30,7 +64,7 @@ const BackgroundOptionSection = ({ backgroundOptions, handleBackgroundColor, sel
             <div className='mb-5 '>
                 <label className='flex items-center' htmlFor="">
                     <input
-                        onChange={() => handleOptionOpen(!selectedBackground?.isOpenCustomOption)}
+                        onChange={() => handleOpenCustom(!selectedBackground?.isOpenCustomOption)}
                         checked={selectedBackground?.isOpenCustomOption}
                         // value={!setSelectedBackground?.selectedBackgroundColor}
                         type="radio"

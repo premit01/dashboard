@@ -74,38 +74,12 @@ const Specifications = () => {
 
     ]
 
-    // background options 
-    const backgroundOptions = [
-        { id: "back1", title: 'white', value: 'white' },
-        { id: "back2", title: 'transparent', value: 'transparent' },
-        { id: "back3", title: 'keep original background', value: '' },
 
-    ]
 
     // handle change format 
     const handleFormatChange = (e) => {
         const checkedFormat = e.target.value
         setSelectedFormate((selectedFormate) => ({ ...selectedFormate, [checkedFormat]: selectedFormate[checkedFormat] === checkedFormat ? '' : checkedFormat }))
-
-    }
-
-
-    // handle background color 
-    const handleBackgroundColor = (event) => {
-
-        const color = event.target.value;
-        console.log('color', color)
-        // hide custom option 
-        setSelectedBackground((selectedBackground) => ({ ...selectedBackground, isOpenCustomOption: color.startsWith('#') || false }))
-        // apply new background 
-        setSelectedBackground((selectedBackground) => ({ ...selectedBackground, selectedBackgroundColor: color }))
-        console.log('selectedBackground', selectedBackground?.selectedBackgroundColor)
-    };
-
-    const handleOptionOpen = (option) => {
-        setSelectedBackground((selectedBackground) => ({ ...selectedBackground, isOpenCustomOption: option }))
-        console.log('isOpen', selectedBackground?.isOpenCustomOption)
-
 
     }
 
@@ -140,10 +114,9 @@ const Specifications = () => {
 
                     {/* background ********************************************* */}
                     <BackgroundOptionSection
-                        backgroundOptions={backgroundOptions}
-                        handleBackgroundColor={handleBackgroundColor}
+
                         selectedBackground={selectedBackground}
-                        handleOptionOpen={handleOptionOpen}
+                        setSelectedBackground={setSelectedBackground}
                     />
 
 

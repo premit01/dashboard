@@ -16,8 +16,8 @@ const CroppingAndAlignment = ({ cropAlignment, setCropAlignment }) => {
 
     const handleOpenRatio = (isOpen) => {
         handlePropertyChange('isOpenRatio', isOpen)
-        handlePropertyChange('isOpenExact', false)
-        handlePropertyChange('isOriginalMargin', false)
+        handlePropertyChange('isOpenExact', "")
+        handlePropertyChange('isOriginalMargin', "")
 
         handlePropertyChange('exactHeight', '')
         handlePropertyChange('exactWidth', '')
